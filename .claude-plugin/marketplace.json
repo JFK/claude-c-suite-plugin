@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-c-suite",
-  "description": "Executive team analysis skills — CTO, PM, CDO, CSO, QA Lead, DX Lead perspectives for any codebase",
+  "description": "Executive team analysis skills — CTO, PM, CDO, CSO, CLO, COO, CMO, CAIO, CFO, QA Lead, DX Lead perspectives for any codebase",
   "owner": {
     "name": "Fumikazu Kiyota",
     "email": "fumikazu.kiyota@gmail.com"
@@ -10,7 +10,7 @@
     {
       "name": "claude-c-suite",
       "source": "./",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "code-quality"
     }
   ]

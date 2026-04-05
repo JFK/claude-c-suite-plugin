@@ -1,7 +1,7 @@
 {
   "name": "claude-c-suite",
-  "version": "1.1.0",
-  "description": "Executive team perspectives for any codebase — CTO, PM, CDO, CSO, QA Lead, DX Lead reviews",
+  "version": "1.2.0",
+  "description": "Executive team perspectives for any codebase — CTO, PM, CDO, CSO, CLO, COO, CMO, CAIO, CFO, QA Lead, DX Lead reviews",
   "author": {
     "name": "Fumikazu Kiyota",
     "url": "https://github.com/JFK"
@@ -15,7 +15,15 @@
     "design-system",
     "testing",
     "developer-experience",
-    "project-management"
+    "project-management",
+    "license-compliance",
+    "operations",
+    "seo",
+    "privacy",
+    "observability",
+    "analytics",
+    "ai-governance",
+    "cost-optimization"
   ],
   "commands": ["./commands/"]
 }
