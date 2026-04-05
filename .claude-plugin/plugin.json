@@ -1,0 +1,21 @@
+{
+  "name": "claude-c-suite",
+  "version": "1.0.0",
+  "description": "Executive team perspectives for any codebase — CTO, PM, CDO, CSO, QA Lead, DX Lead reviews",
+  "author": {
+    "name": "Fumikazu Kiyota",
+    "url": "https://github.com/JFK"
+  },
+  "repository": "https://github.com/JFK/claude-c-suite-plugin",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "architecture",
+    "security",
+    "design-system",
+    "testing",
+    "developer-experience",
+    "project-management"
+  ],
+  "commands": ["./commands/"]
+}
