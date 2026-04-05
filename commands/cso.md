@@ -175,12 +175,12 @@ Structure output as:
 - **Low** (nice to have)
 ```
 
-### 10. Cross-reference with CTO/PM views
+### 10. Cross-reference with CTO/CLO/CAIO views
 
-If `/cto` or `/pm` has been run in this session, cross-reference:
-- Are security issues properly prioritized in milestones?
-- Is technical debt creating security risk?
-- Are there features planned that need security review first?
+If `/cto`, `/clo`, or `/caio` has been run in this session, cross-reference:
+- Does technical architecture create or mitigate security risks? (`/cto`)
+- Do security vulnerabilities have legal or compliance implications? (`/clo`)
+- Are AI integrations properly secured against prompt injection and data leakage? (`/caio`)
 
 ### 11. Cross-reference with PhD Panel views
 

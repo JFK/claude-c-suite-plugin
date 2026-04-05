@@ -165,14 +165,12 @@ Structure output as:
 - **Quick wins** (configuration changes, immediate savings)
 ```
 
-### 9. Cross-reference with C-Suite views
+### 9. Cross-reference with CTO/CAIO/COO views
 
-If other C-Suite commands have been run in this session, cross-reference:
+If `/cto`, `/caio`, or `/coo` has been run in this session, cross-reference:
 - Are performance issues also cost issues? (`/cto`)
-- Are cost-heavy features prioritized appropriately in milestones? (`/pm`)
-- Are billing endpoints secure against manipulation? (`/cso`)
 - Are AI/ML model API costs tracked and optimized? (`/caio`)
-- Do query efficiency issues overlap with testing gaps? (`/qa-lead`)
+- Are infrastructure costs aligned with operational requirements? (`/coo`)
 
 ### 10. Cross-reference with PhD Panel views
 

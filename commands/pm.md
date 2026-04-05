@@ -99,7 +99,15 @@ Structure your output as:
 ### 5. Execute (with confirmation)
 
 If reorganization is proposed, ask the user before executing any changes.
-### 6. Cross-reference with PhD Panel views
+
+### 6. Cross-reference with CTO/CFO/COO views
+
+If `/cto`, `/cfo`, or `/coo` has been run in this session, cross-reference:
+- Is technical debt affecting milestone feasibility? (`/cto`)
+- Are cost constraints reflected in feature prioritization? (`/cfo`)
+- Is operational readiness factored into release planning? (`/coo`)
+
+### 7. Cross-reference with PhD Panel views
 
 If any PhD Panel commands (`/claude-phd-panel:cs`, `/claude-phd-panel:db`, `/claude-phd-panel:stats`, `/claude-phd-panel:ds`, `/claude-phd-panel:dist-sys`, `/claude-phd-panel:pl`) have been run in this session, cross-reference:
 - Do PhD findings affect prioritization or risk assessment of milestones?

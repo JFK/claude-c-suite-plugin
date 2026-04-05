@@ -166,12 +166,12 @@ Structure output as:
 - **Low** (operational polish)
 ```
 
-### 9. Cross-reference with CTO/CSO/QA Lead views
+### 9. Cross-reference with CTO/QA Lead/CFO views
 
-If `/cto`, `/cso`, or `/qa-lead` has been run in this session, cross-reference:
+If `/cto`, `/qa-lead`, or `/cfo` has been run in this session, cross-reference:
 - Is tech debt affecting operational reliability? (`/cto`)
-- Are security concerns reflected in deployment hardening? (`/cso`)
 - Is CI test coverage adequate for safe deployments? (`/qa-lead`)
+- Are infrastructure costs aligned with operational requirements? (`/cfo`)
 
 ### 10. Cross-reference with PhD Panel views
 

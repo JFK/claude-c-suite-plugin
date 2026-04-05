@@ -162,12 +162,12 @@ Structure output as:
 - **Test infrastructure**: Tools or frameworks to adopt
 ```
 
-### 8. Cross-reference with other views
+### 8. Cross-reference with CTO/COO/CSO views
 
-If `/cto`, `/pm`, or `/cso` has been run in this session:
-- Are high-debt areas also undertested? (compound risk)
-- Are security-sensitive areas adequately tested?
-- Do upcoming milestones include test work, or is it all features?
+If `/cto`, `/coo`, or `/cso` has been run in this session, cross-reference:
+- Is test strategy aligned with architecture and tech debt priorities? (`/cto`)
+- Is CI test coverage adequate for safe deployments? (`/coo`)
+- Are security-critical paths adequately tested? (`/cso`)
 
 ### 9. Cross-reference with PhD Panel views
 

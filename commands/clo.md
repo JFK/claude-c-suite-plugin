@@ -154,11 +154,11 @@ Structure output as:
 - **Low** (defensive improvements)
 ```
 
-### 8. Cross-reference with CSO/CTO/PM views
+### 8. Cross-reference with CSO/CIO/PM views
 
-If `/cso`, `/cto`, or `/pm` has been run in this session, cross-reference:
-- Do dependency security issues also have license implications? (`/cso`)
-- Is legal/compliance debt tracked alongside tech debt? (`/cto`)
+If `/cso`, `/cio`, or `/pm` has been run in this session, cross-reference:
+- Do security vulnerabilities create legal exposure? (`/cso`)
+- Does data governance meet privacy and regulatory requirements? (`/cio`)
 - Are compliance milestones reflected in release planning? (`/pm`)
 
 ### 9. Cross-reference with PhD Panel views

@@ -159,12 +159,12 @@ Structure output as:
 - Pages that need alignment passes
 ```
 
-### 7. Cross-reference with CTO/PM views
+### 7. Cross-reference with CTO/CMO/DX Lead views
 
-If `/cto` or `/pm` has been run in this session, cross-reference:
-- Are there open issues that address the design problems found?
-- Should new issues be created for design debt?
-- Is design debt concentrated in areas with planned refactoring?
+If `/cto`, `/cmo`, or `/dx-lead` has been run in this session, cross-reference:
+- Is the design system implementation aligned with technical architecture? (`/cto`)
+- Are design components supporting SEO requirements (semantic HTML, accessibility)? (`/cmo`)
+- Are component APIs ergonomic for developers to use correctly? (`/dx-lead`)
 
 ### 8. Cross-reference with PhD Panel views
 

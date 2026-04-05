@@ -162,14 +162,12 @@ Structure output as:
 - **Low** (improvement opportunities)
 ```
 
-### 9. Cross-reference with C-Suite views
+### 9. Cross-reference with CTO/CSO/CFO views
 
-If other C-Suite commands have been run in this session, cross-reference:
-- Are AI-related costs tracked and flagged? (`/cfo`)
-- Are model API keys and credentials properly managed? (`/cso`)
-- Is AI-related technical debt tracked in milestones? (`/cto`, `/pm`)
-- Are AI features adequately tested? (`/qa-lead`)
-- Is the AI API surface developer-friendly? (`/dx-lead`)
+If `/cto`, `/cso`, or `/cfo` has been run in this session, cross-reference:
+- Is AI-related technical debt tracked alongside other tech debt? (`/cto`)
+- Are model API keys secure and AI integrations resistant to prompt injection? (`/cso`)
+- Are AI/ML model API costs tracked and optimized? (`/cfo`)
 
 ### 10. Cross-reference with PhD Panel views
 

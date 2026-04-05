@@ -131,14 +131,14 @@ Structure output as:
 - Specific issues that need milestone assignment or triage
 ```
 
-### 7. Cross-reference with PM view
+### 8. Cross-reference with PM/CSO/CIO views
 
-If `/pm` has been run in this session, cross-reference:
-- Are milestones balanced between features and debt paydown?
-- Is the release order sustainable from a technical perspective?
-- Flag any milestone that is all-features-no-cleanup
+If `/pm`, `/cso`, or `/cio` has been run in this session, cross-reference:
+- Are technical debt priorities aligned with milestone planning? (`/pm`)
+- Do architecture decisions create or mitigate security risks? (`/cso`)
+- Does data architecture align with the overall technical architecture? (`/cio`)
 
-### 8. Cross-reference with PhD Panel views
+### 9. Cross-reference with PhD Panel views
 
 If any PhD Panel commands (`/claude-phd-panel:cs`, `/claude-phd-panel:db`, `/claude-phd-panel:stats`, `/claude-phd-panel:ds`, `/claude-phd-panel:dist-sys`, `/claude-phd-panel:pl`) have been run in this session, cross-reference:
 - Do PhD findings support or challenge your executive recommendations?

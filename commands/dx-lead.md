@@ -181,13 +181,12 @@ Structure output as:
 - **Developer feedback channels**: How to gather ongoing DX feedback
 ```
 
-### 10. Cross-reference with other views
+### 10. Cross-reference with CTO/CDO/CMO views
 
-If other officer skills have been run in this session:
-- Are DX issues captured in the issue tracker? (`/pm`)
-- Is DX debt part of tech debt tracking? (`/cto`)
-- Are security-critical APIs also DX-friendly? (`/cso`)
-- Is the API design consistent with UI patterns? (`/cdo`)
+If `/cto`, `/cdo`, or `/cmo` has been run in this session, cross-reference:
+- Are API design decisions aligned with overall architecture? (`/cto`)
+- Are component APIs consistent with the design system? (`/cdo`)
+- Is the analytics SDK ergonomic for developers to instrument features? (`/cmo`)
 
 ### 11. Cross-reference with PhD Panel views
 
