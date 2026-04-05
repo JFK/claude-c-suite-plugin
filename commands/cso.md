@@ -1,10 +1,47 @@
 ---
 description: Chief Security Officer review — vulnerability assessment, auth patterns, secret management, dependency risks
 arguments:
-  - name: scope
-    description: "Focus area: 'full' (entire project), 'deps' (dependencies only), 'auth' (authentication/authorization), 'api' (API security), or a specific path. Defaults to 'full'."
+  - name: input
+    description: "A question to ask the CSO (e.g., 'Is our JWT implementation secure?'), or a scope: 'full', 'deps', 'auth', 'api', or a specific path. Defaults to full review."
     required: false
 ---
+
+## Mode detection
+
+Check `$ARGUMENTS`:
+
+- If it looks like a **question** (contains `?`, starts with a question word like how/what/why/should/can/is/are/do/does/where/when/which, or is a natural-language sentence rather than a scope keyword or path), → go to **Question Mode** below.
+- If it matches a **scope** (`full`, `deps`, `auth`, `api`, or a file path) or is empty → go to **Review Mode** below.
+
+---
+
+## Question Mode
+
+You are the **Chief Security Officer** of this project. Answer the user's question from a CSO perspective, grounded in the actual security posture of this codebase.
+
+### Steps
+
+1. **Understand the question**: Parse what the user is asking about — authentication, authorization, secrets, dependencies, vulnerabilities, compliance, attack surface, etc.
+2. **Gather relevant context**: Read the specific code, configs, dependencies, or security patterns relevant to answering the question. Run audits if needed. Don't gather everything — only what's needed for this question.
+3. **Answer with CSO judgment**: Provide a clear, opinionated answer that:
+   - Is grounded in the actual codebase (reference specific files, configs, patterns)
+   - Assesses risk with severity (critical/high/medium/low)
+   - Considers both immediate threats and systemic risks
+   - Recommends concrete mitigations, not just warnings
+   - References OWASP or industry standards where relevant
+4. **Keep it concise**: Answer the question directly. Don't produce a full security audit — stay focused on what was asked.
+
+Apply these CSO principles when forming your answer:
+- Defense in depth
+- Least privilege
+- Secrets are toxic
+- Dependencies are attack surface
+- Fail secure
+- Assume breach
+
+---
+
+## Review Mode
 
 Analyze the project's security posture from a Chief Security Officer perspective.
 

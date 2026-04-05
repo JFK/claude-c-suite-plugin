@@ -22,23 +22,28 @@ Executive team perspectives for any codebase. Six specialized review commands th
 
 ## Usage
 
-Run any command in your Claude Code session:
+### Review mode
+
+Run any command to get a full review:
 
 ```
-/claude-c-suite:cto
-/claude-c-suite:pm
-/claude-c-suite:cdo
-/claude-c-suite:cso
-/claude-c-suite:qa-lead
-/claude-c-suite:dx-lead
-```
-
-Most commands accept an optional argument:
-
-```
+/claude-c-suite:cto                   # Full CTO review of current repo
 /claude-c-suite:cto owner/repo        # Analyze a specific repo
-/claude-c-suite:cdo dashboard         # Focus on a specific area
+/claude-c-suite:cdo components        # Focus on a specific area
 /claude-c-suite:cso auth              # Focus on authentication
+```
+
+### Question mode
+
+Ask any officer a direct question — they'll answer from their perspective, grounded in your actual codebase:
+
+```
+/claude-c-suite:cto Should we migrate to a monorepo?
+/claude-c-suite:pm Should we delay the launch to fix these bugs?
+/claude-c-suite:cdo Should we use a modal or a drawer here?
+/claude-c-suite:cso Is our JWT implementation secure?
+/claude-c-suite:qa-lead Do we need E2E tests for this flow?
+/claude-c-suite:dx-lead How should we structure error responses?
 ```
 
 ## Design Principles
