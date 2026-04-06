@@ -176,3 +176,7 @@ If any PhD Panel commands (`/claude-phd-panel:cs`, `/claude-phd-panel:db`, `/cla
 - Are there academically-identified risks that current tests don't cover?
 
 Do NOT execute any changes or write any tests. This is analysis only — recommend actions for the user to decide.
+
+---
+
+> ⚠️ **AI-generated advice**: This analysis is produced by an LLM and may contain errors or omissions. Verify critical recommendations — especially those related to security, legal, financial, or compliance matters — with qualified domain experts before acting on them.

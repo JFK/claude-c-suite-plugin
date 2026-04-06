@@ -115,3 +115,7 @@ If any PhD Panel commands (`/claude-phd-panel:cs`, `/claude-phd-panel:db`, `/cla
 - Should any PhD recommendations be captured as new issues?
 
 Do NOT move issues or create/modify milestones without explicit approval.
+
+---
+
+> ⚠️ **AI-generated advice**: This analysis is produced by an LLM and may contain errors or omissions. Verify critical recommendations — especially those related to security, legal, financial, or compliance matters — with qualified domain experts before acting on them.
