@@ -60,6 +60,22 @@ Executive team perspectives for any codebase. Thirteen specialized review comman
 /plugin install claude-c-suite
 ```
 
+### Required GitHub token scopes
+
+The plugin issues `gh` commands to read issues, milestones, and labels.
+Most commands are read-only; `/pm` is the only command that may suggest
+write operations (`gh issue create`, `gh issue edit`), and only after
+explicit user confirmation.
+
+| Use case | Recommended scopes |
+|----------|---------------------|
+| Public repos only | `public_repo` |
+| Private repos | `repo` |
+| Organization repos | `repo` + `read:org` |
+
+See [SECURITY.md](./SECURITY.md) for the full threat model and the
+vulnerability reporting process.
+
 ## Usage
 
 ### Review mode
