@@ -17,23 +17,40 @@ python3 scripts/audit.py --matrix   # also print the conformance matrix
 Exit code is `0` if all checks pass, `1` otherwise. Run this before
 opening a pull request and before tagging a release.
 
+## Command categories
+
+The plugin distinguishes two kinds of commands:
+
+- **Role commands** (13): the executive perspectives (`/ceo`, `/cto`,
+  `/pm`, `/cdo`, `/cso`, `/clo`, `/coo`, `/cmo`, `/caio`, `/cfo`,
+  `/cio`, `/qa-lead`, `/dx-lead`). These are subject to the **full**
+  set of conformance checks.
+- **Utility commands** (1): maintainer tools (`/audit`). These are
+  exempt from role-specific conventions (Question/Review modes, Top 3
+  cross-references, PhD Panel cross-references, scope-keyword args)
+  but must still pass the safety conventions (Trust boundary,
+  AI disclaimer, frontmatter).
+
+The audit script reports `—` for inapplicable cells in the matrix.
+
 ## Per-command checks
 
 Each command file under `commands/` is verified against the following
-checks:
+checks. The "Roles" column marks which checks apply to role commands,
+and "Utility" marks which apply to utility commands:
 
-| Check | What it verifies |
-|-------|------------------|
-| **Frontmatter** | YAML frontmatter declares `description` and `arguments` |
-| **Trust boundary** | `## Trust boundary` section is present (prompt-injection guardrail) |
-| **Mode detection** | `## Mode detection` section is present |
-| **Question Mode** | `## Question Mode` handler is present |
-| **Review Mode** | `## Review Mode` handler is present |
-| **Scope-keyword args** | The string `owner/repo` does **not** appear (legacy convention) |
-| **Cross-references** | The phrase `cross-reference` appears (Top 3 peer references) |
-| **PhD Panel reference** | The plugin slug `claude-phd-panel` appears |
-| **AI disclaimer** | The footer phrase `AI-generated advice` is present |
-| **Analysis-only guarantee** | `Do NOT execute` or `Do NOT move` is present |
+| Check | What it verifies | Roles | Utility |
+|-------|------------------|:-:|:-:|
+| **Frontmatter** | YAML frontmatter declares `description` and `arguments` | ✅ | ✅ |
+| **Trust boundary** | `## Trust boundary` section is present (prompt-injection guardrail) | ✅ | ✅ |
+| **AI disclaimer** | The footer phrase `AI-generated advice` is present | ✅ | ✅ |
+| **Mode detection** | `## Mode detection` section is present | ✅ | — |
+| **Question Mode** | `## Question Mode` handler is present | ✅ | — |
+| **Review Mode** | `## Review Mode` handler is present | ✅ | — |
+| **Scope-keyword args** | The string `owner/repo` does **not** appear (legacy convention) | ✅ | — |
+| **Cross-references** | The phrase `cross-reference` appears (Top 3 peer references) | ✅ | — |
+| **PhD Panel reference** | The plugin slug `claude-phd-panel` appears | ✅ | — |
+| **Analysis-only guarantee** | `Do NOT execute` or `Do NOT move` is present | ✅ | — |
 
 ## Repository-level checks
 
@@ -54,6 +71,7 @@ whenever the audit script reports a new state.
 
 | Command | Frontmatter | Trust boundary | Mode detection | Question Mode | Review Mode | Scope args | Cross-ref | PhD Panel | Disclaimer | Analysis-only |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| `/audit` | ✅ | ✅ | — | — | — | — | — | — | ✅ | — |
 | `/caio` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `/cdo` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `/ceo` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

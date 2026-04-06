@@ -22,10 +22,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   Reminds users that the output is LLM-generated and that critical
   recommendations (security, legal, financial, compliance) should be
   verified with qualified domain experts before acting on them.
+- `/claude-c-suite:audit` — new maintainer utility command. Acts as
+  the conformance audit and release gate: runs `scripts/audit.py`,
+  reports pass/fail with fix suggestions, and outlines the release
+  steps when the plugin is cleared. Does not modify files.
+- `scripts/audit.py` — conformance audit script. Runs 10 per-role
+  checks across 13 role commands plus 3 safety checks for utility
+  commands plus 7 repository-level checks (140 checks total).
 - `SECURITY.md` — threat model, mitigations, required GitHub token
   scopes, vulnerability reporting process.
 - `CONTRIBUTING.md` — feature freeze policy, style guide, PR workflow.
 - `CHANGELOG.md` — this file, with retroactive history.
+- `AUDIT.md` — conformance matrix and policy reference.
+- `USAGE.md` / `USAGE.ja.md` — comprehensive usage guides for end users.
 
 ## [1.3.0] — CEO meta-layer and Top 3 cross-reference model
 

@@ -57,16 +57,30 @@ COMMAND_CHECKS = [
      lambda c: "Do NOT execute" in c or "Do NOT move" in c),
 ]
 
-EXPECTED_COMMANDS = {
+# Role commands are full executive perspectives subject to all conventions.
+ROLE_COMMANDS = {
     "ceo.md", "cto.md", "pm.md", "cdo.md", "cso.md",
     "clo.md", "coo.md", "cmo.md", "caio.md", "cfo.md",
     "cio.md", "qa-lead.md", "dx-lead.md",
 }
 
+# Utility commands are maintainer tools (e.g., the audit gate itself).
+# They share the safety conventions (Trust boundary, AI disclaimer) but
+# are exempt from role-specific conventions (Question/Review modes,
+# Top 3 cross-references, PhD Panel cross-references, scope-keyword args).
+UTILITY_COMMANDS = {
+    "audit.md",
+}
 
-def audit_commands() -> tuple[dict[str, dict[str, bool]], list[str]]:
+EXPECTED_COMMANDS = ROLE_COMMANDS | UTILITY_COMMANDS
+
+# Subset of COMMAND_CHECKS that applies to utility commands.
+UTILITY_CHECK_KEYS = {"frontmatter", "trust_boundary", "ai_disclaimer"}
+
+
+def audit_commands() -> tuple[dict[str, dict[str, bool | None]], list[str]]:
     """Run all checks against every command file. Returns (results, errors)."""
-    results: dict[str, dict[str, bool]] = {}
+    results: dict[str, dict[str, bool | None]] = {}
     errors: list[str] = []
 
     found = {f for f in os.listdir(CMD_DIR) if f.endswith(".md")}
@@ -80,8 +94,14 @@ def audit_commands() -> tuple[dict[str, dict[str, bool]], list[str]]:
     for fname in sorted(found):
         with open(os.path.join(CMD_DIR, fname)) as f:
             content = f.read()
-        results[fname] = {key: predicate(content)
-                          for key, _, predicate in COMMAND_CHECKS}
+        if fname in UTILITY_COMMANDS:
+            applicable: set[str] = set(UTILITY_CHECK_KEYS)
+        else:
+            applicable = {key for key, _, _ in COMMAND_CHECKS}
+        per_file: dict[str, bool | None] = {}
+        for key, _, predicate in COMMAND_CHECKS:
+            per_file[key] = predicate(content) if key in applicable else None
+        results[fname] = per_file
 
     return results, errors
 
@@ -113,14 +133,20 @@ def audit_metadata() -> list[str]:
     return errors
 
 
-def render_matrix(results: dict[str, dict[str, bool]]) -> str:
+def render_matrix(results: dict[str, dict[str, bool | None]]) -> str:
     headers = ["Command"] + [label for _, label, _ in COMMAND_CHECKS]
     lines = ["| " + " | ".join(headers) + " |"]
     lines.append("|" + "|".join([" :--- "] + [" :-: " for _ in COMMAND_CHECKS]) + "|")
     for fname in sorted(results):
         cells = ["`/" + fname.replace(".md", "") + "`"]
         for key, _, _ in COMMAND_CHECKS:
-            cells.append("✅" if results[fname][key] else "❌")
+            value = results[fname][key]
+            if value is None:
+                cells.append("—")
+            elif value:
+                cells.append("✅")
+            else:
+                cells.append("❌")
         lines.append("| " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
@@ -131,10 +157,16 @@ def main() -> int:
     metadata_errors = audit_metadata()
 
     failures: list[str] = list(structural_errors)
+    total_checks = 0
     for fname, checks in results.items():
         for key, label, _ in COMMAND_CHECKS:
-            if not checks[key]:
+            value = checks[key]
+            if value is None:
+                continue
+            total_checks += 1
+            if not value:
                 failures.append(f"{fname}: {label}")
+    total_checks += 1 + 6  # version sync + 6 required documents
     failures.extend(metadata_errors)
 
     if show_matrix:
@@ -147,9 +179,11 @@ def main() -> int:
             print(f"  ❌ {f}")
         return 1
 
-    total_checks = len(results) * len(COMMAND_CHECKS) + 1 + 6  # commands + version + 6 docs
+    role_count = sum(1 for f in results if f in ROLE_COMMANDS)
+    util_count = sum(1 for f in results if f in UTILITY_COMMANDS)
     print(f"✅ All {total_checks} conformance checks passed "
-          f"({len(results)} commands × {len(COMMAND_CHECKS)} checks "
+          f"({role_count} role commands × {len(COMMAND_CHECKS)} checks "
+          f"+ {util_count} utility commands × {len(UTILITY_CHECK_KEYS)} checks "
           f"+ metadata).")
     return 0
 
