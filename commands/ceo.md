@@ -190,3 +190,7 @@ No specific need given. Diagnose the codebase to find the most important executi
 ```
 
 Do NOT execute any changes or fixes. This is analysis only — recommend actions for the user to decide.
+
+---
+
+> ⚠️ **AI-generated advice**: This analysis is produced by an LLM and may contain errors or omissions. Verify critical recommendations — especially those related to security, legal, financial, or compliance matters — with qualified domain experts before acting on them.
