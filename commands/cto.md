@@ -2,7 +2,7 @@
 description: CTO-level technical health review — tech debt, architecture, refactoring priorities
 arguments:
   - name: input
-    description: "A question to ask the CTO (e.g., 'How should we handle the DB migration?'), or a target repo (e.g., owner/repo). Defaults to full review of current repo."
+    description: "A question to ask the CTO (e.g., 'How should we handle the DB migration?'), or a scope: 'full', 'debt', 'arch', 'deps', 'docs', 'bugs', or a specific path. Defaults to full review."
     required: false
 ---
 
@@ -10,8 +10,8 @@ arguments:
 
 Check `$ARGUMENTS`:
 
-- If it looks like a **question** (contains `?`, starts with a question word like how/what/why/should/can/is/are/do/does/where/when/which, or is a natural-language sentence rather than a repo slug), → go to **Question Mode** below.
-- If it looks like a **repo** (`owner/repo` format) or is empty → go to **Review Mode** below.
+- If it looks like a **question** (contains `?`, starts with a question word like how/what/why/should/can/is/are/do/does/where/when/which, or is a natural-language sentence rather than a scope keyword or path), → go to **Question Mode** below.
+- If it matches a **scope** (`full`, `debt`, `arch`, `deps`, `docs`, `bugs`, or a file path) or is empty → go to **Review Mode** below.
 
 ---
 
@@ -51,13 +51,13 @@ Analyze the project's technical health from a CTO perspective.
 ### 1. Gather current state
 
 Run in parallel:
-- `gh issue list --repo $REPO --state open --json number,title,milestone,labels,createdAt` — all open issues
-- `gh issue list --repo $REPO --state open --label bug --json number,title,milestone,createdAt` — open bugs
-- `gh issue list --repo $REPO --state open --search "refactor OR tech-debt OR deprecat" --json number,title,milestone` — refactoring/debt issues
+- `gh issue list --state open --json number,title,milestone,labels,createdAt` — all open issues
+- `gh issue list --state open --label bug --json number,title,milestone,createdAt` — open bugs
+- `gh issue list --state open --search "refactor OR tech-debt OR deprecat" --json number,title,milestone` — refactoring/debt issues
 - `git log --oneline -30` — recent commit activity (if in repo)
 - Check for issues labeled `refactor`, `tech-debt`, `breaking-change`, or with "refactor" in title
 
-If `$ARGUMENTS` provides a repo, use it. Otherwise use the current repo.
+If `$ARGUMENTS` provides a scope, narrow analysis to that area.
 
 ### 2. Tech debt assessment
 
