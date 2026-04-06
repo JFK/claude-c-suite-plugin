@@ -2,7 +2,7 @@
 description: Product manager analysis — milestone triage, issue prioritization, release planning
 arguments:
   - name: input
-    description: "A question to ask the PM (e.g., 'Should we delay the launch to fix these bugs?'), or a target repo (e.g., owner/repo). Defaults to full review of current repo."
+    description: "A question to ask the PM (e.g., 'Should we delay the launch to fix these bugs?'), or a scope: 'full', 'milestones', 'bugs', 'releases'. Defaults to full review."
     required: false
 ---
 
@@ -10,8 +10,8 @@ arguments:
 
 Check `$ARGUMENTS`:
 
-- If it looks like a **question** (contains `?`, starts with a question word like how/what/why/should/can/is/are/do/does/where/when/which, or is a natural-language sentence rather than a repo slug), → go to **Question Mode** below.
-- If it looks like a **repo** (`owner/repo` format) or is empty → go to **Review Mode** below.
+- If it looks like a **question** (contains `?`, starts with a question word like how/what/why/should/can/is/are/do/does/where/when/which, or is a natural-language sentence rather than a scope keyword), → go to **Question Mode** below.
+- If it matches a **scope** (`full`, `milestones`, `bugs`, `releases`) or is empty → go to **Review Mode** below.
 
 ---
 
@@ -51,11 +51,11 @@ Analyze the project's milestones and open issues from a product manager perspect
 ### 1. Gather current state
 
 Run in parallel:
-- `gh issue list --repo $REPO --state open --json number,title,milestone,labels,createdAt` — all open issues
-- `gh api repos/$REPO/milestones?state=open` — open milestones with descriptions
-- `gh api repos/$REPO/milestones?state=closed --jq '.[] | "\(.number) \(.title)"'` — closed milestones for version history context
+- `gh issue list --state open --json number,title,milestone,labels,createdAt` — all open issues
+- `gh api repos/{owner}/{repo}/milestones?state=open` — open milestones with descriptions
+- `gh api repos/{owner}/{repo}/milestones?state=closed --jq '.[] | "\(.number) \(.title)"'` — closed milestones for version history context
 
-If `$ARGUMENTS` provides a repo, use it. Otherwise use the current repo.
+If `$ARGUMENTS` provides a scope, narrow analysis to that area.
 
 ### 2. Analyze each milestone
 
