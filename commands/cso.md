@@ -112,7 +112,7 @@ If `$ARGUMENTS` provides a scope, narrow analysis to that area.
 
 ### 7. OWASP Top 10 check
 
-Evaluate against current OWASP Top 10:
+Evaluate against **OWASP Top 10:2021** (the most recent published edition; the next revision is expected in 2025 — update this anchor when it ships):
 1. **Broken Access Control** — Authorization bypass, IDOR, privilege escalation
 2. **Cryptographic Failures** — Weak hashing, plaintext transmission, improper key management
 3. **Injection** — SQL injection, NoSQL injection, command injection, XSS
