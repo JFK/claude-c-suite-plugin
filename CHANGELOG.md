@@ -4,7 +4,9 @@ All notable changes to Claude C-Suite Plugin are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased] — v1.4 "Consistency Pass"
+## [Unreleased]
+
+## [1.4.0] — 2026-04-06 — "Consistency Pass"
 
 ### Fixed
 - `/cto` and `/pm` argument convention unified with the other 11 commands.
