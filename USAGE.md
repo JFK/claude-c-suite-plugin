@@ -210,6 +210,30 @@ to create your own — it integrates seamlessly with C-Suite.
 
 ---
 
+## For maintainers: the audit command
+
+If you maintain this plugin (or a fork of it), use the audit command
+as your release gate:
+
+```
+/claude-c-suite:audit              # run the audit, report pass/fail
+/claude-c-suite:audit matrix       # also print the conformance matrix
+```
+
+When the audit passes, the command will outline the release steps.
+When it fails, it will list each failure with a suggested fix and
+tell you to re-run after correcting them. The audit command is
+read-only and never modifies files.
+
+You can also run the audit script directly from the terminal:
+
+```bash
+python3 scripts/audit.py
+python3 scripts/audit.py --matrix
+```
+
+See [AUDIT.md](./AUDIT.md) for the full list of checks.
+
 ## Next steps
 
 - Review the [SECURITY.md](./SECURITY.md) threat model before pointing

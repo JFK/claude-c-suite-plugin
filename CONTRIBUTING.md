@@ -7,8 +7,10 @@ Thanks for your interest in improving this plugin.
 **v1.4 ("Consistency Pass")** and **v1.5 ("Maintainability Pass")** are
 **feature-freeze releases**. During this period:
 
-- ❌ **No new roles** will be added (no CHRO, CTOO, CRO, etc.)
-- ❌ **No new commands** outside the existing 13
+- ❌ **No new role commands** will be added (no CHRO, CTOO, CRO, etc.)
+- ✅ **Maintainer utility commands** (e.g., `/audit`) may be added if
+  they support governance, conformance, or release workflows. These
+  are exempt from role-specific conventions.
 - ✅ Bug fixes, documentation improvements, governance/compliance work,
   and internal refactors are welcome
 - ✅ Cross-reference graph adjustments to existing roles are welcome
