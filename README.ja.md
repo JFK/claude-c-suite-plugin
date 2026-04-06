@@ -2,6 +2,23 @@
 
 あらゆるコードベースに経営チームの視点を。13の専門レビューコマンドが、異なるリーダーシップの観点からプロジェクトを分析します。
 
+## 60秒クイックスタート
+
+```bash
+/plugin marketplace add JFK/claude-c-suite-plugin
+/plugin install claude-c-suite
+```
+
+任意の git リポジトリで：
+
+```
+/claude-c-suite:ceo
+```
+
+CEO コマンドが自動的にプロジェクトを診断し、最も関連の深い3つの経営視点を選び、優先順位付きのアクションリストを返します。**迷ったら `/ceo` から始めてください** — 常に正しい安全な入り口として設計されています。
+
+詳細な使い方ガイド（決定木、よく使うパターン、複数ロール相談、プラグイン併用、トラブルシューティング）は **[USAGE.ja.md](./USAGE.ja.md)** ([English](./USAGE.md)) を参照してください。
+
 ## コマンド一覧
 
 | コマンド | 役職 | レビュ���対象 |
@@ -60,44 +77,37 @@
 /plugin install claude-c-suite
 ```
 
-## 使い方
+## 使い方の概要
 
-### レビューモード
+> 詳細ガイド: **[USAGE.ja.md](./USAGE.ja.md)** ([English](./USAGE.md))
 
-コマンドを実行するとフルレビューが始まります：
+### レビューモード — フルまたはスコープ指定の分析
 
 ```
 /claude-c-suite:ceo                   # 自動診断して経営サマリーを出力
 /claude-c-suite:cto                   # 現在のリポジトリをCTOとしてフルレビュー
-/claude-c-suite:cto owner/repo        # 特定のリポジトリを分析
-/claude-c-suite:cdo components        # 特定の領域に絞る
+/claude-c-suite:cto debt              # 技術的負債のみに絞る
 /claude-c-suite:cso auth              # 認証に絞る
 /claude-c-suite:clo licenses          # 依存関係のライセンスに絞る
 /claude-c-suite:coo cicd              # CI/CDパイプラインに絞る
 /claude-c-suite:cmo seo               # SEOに絞る
-/claude-c-suite:caio models            # モデルライフサイクルに絞る
-/claude-c-suite:cfo costs              # クラウドコストに絞る
-/claude-c-suite:cio data               # データガバナンスに絞る
+/claude-c-suite:caio models           # モデルライフサイクルに絞る
+/claude-c-suite:cfo costs             # クラウドコストに絞る
+/claude-c-suite:cio data              # データガバナンスに絞る
 ```
 
-### 質問モード
+### 質問モード — 自然言語で質問
 
-各役員に直接質問できます。実際のコードベースに基づいて、その役職の視点から回答します：
+各ロールは自然言語の質問に対し、実際のコードベースに基づいてその役職の視点から回答します：
 
 ```
 /claude-c-suite:ceo ローンチ前に何をチェックすべき？
 /claude-c-suite:cto モノレポに移行すべき？
 /claude-c-suite:pm このバグを直すためにリリースを遅らせるべき？
-/claude-c-suite:cdo ここはモーダルとドロワーどちらが適切？
 /claude-c-suite:cso JWTの実装は安全？
-/claude-c-suite:qa-lead このフローにE2Eテストは必要？
-/claude-c-suite:dx-lead エラーレスポンスの構造はどうすべき？
 /claude-c-suite:clo このGPLライブラリをSaaSプロダクトで使える？
-/claude-c-suite:coo ゼロダウンタイムデプロイの準備はできている？
-/claude-c-suite:cmo このページはターゲットキーワードで上位表示できる？
+/claude-c-suite:cfo データベースのティアはオーバープロビジョニング？
 /claude-c-suite:caio プロンプトインジェクションのリスクに対応できている？
-/claude-c-suite:cfo データベースのティアはオーバープロビジョニングされている？
-/claude-c-suite:cio データモデルは正しく正規化されている？
 ```
 
 ## 相互参照マップ
@@ -199,14 +209,27 @@ graph TD
     QA <--> CSO
 ```
 
-全役員は [PhD Panel](https://github.com/JFK/claude-phd-panel-plugin)（学術的レビュー）の分析結果も参照可能です。
-
 ## 設計思想
 
 - **分析のみ** — 変更を実行せず、アクションを推奨するのみ
 - **相互参照** — 同一セッションで複数コマンドを実行すると、互いの分析結果を参照
 - **GitHub連携** — `gh` CLIでIssue、マイルストーン、コミット履歴を収集
 - **汎用的** — プロジェクト固有の前提なし。あらゆるコードベースで動作
+
+## ドキュメント
+
+| ドキュメント | 用途 |
+|------|------|
+| [USAGE.ja.md](./USAGE.ja.md) / [USAGE.md](./USAGE.md) | 完全な使い方ガイド — クイックスタート、決定木、パターン、トラブルシューティング |
+| [SECURITY.md](./SECURITY.md) | 脅威モデル、軽減策、GitHubトークンスコープ、脆弱性報告 |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | スタイルガイド、フィーチャーフリーズ方針、PR ワークフロー |
+| [CHANGELOG.md](./CHANGELOG.md) | リリース履歴（v1.0 → 現在） |
+| [AUDIT.md](./AUDIT.md) | 整合性監査マトリクスと検証スクリプト（`python3 scripts/audit.py`） |
+
+## 関連プラグイン
+
+- **[claude-phd-panel](https://github.com/JFK/claude-phd-panel-plugin)** — 学術的レビュー（分散システム、統計、データベース理論など）。同一セッション内で実行すると、C-Suite コマンドが自動的に所見を取り込みます。
+- **[expert-craft](https://github.com/JFK/expert-craft-plugin)** — C-Suite と相互参照する独自のドメインエキスパートを作成できます。
 
 ## ライセンス
 

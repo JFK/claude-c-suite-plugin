@@ -2,6 +2,27 @@
 
 Executive team perspectives for any codebase. Thirteen specialized review commands that analyze your project from different leadership viewpoints.
 
+## 60-second quick start
+
+```bash
+/plugin marketplace add JFK/claude-c-suite-plugin
+/plugin install claude-c-suite
+```
+
+Then in any git repository:
+
+```
+/claude-c-suite:ceo
+```
+
+The CEO command auto-diagnoses your project, picks the 3 most relevant
+executive perspectives, and gives you a prioritized action list. **When
+in doubt, start with `/ceo`** — it's the safe, always-correct entry point.
+
+For the full guide (decision tree, common patterns, multi-role
+consultation, plugin combinations, troubleshooting), see
+**[USAGE.md](./USAGE.md)** ([日本語版](./USAGE.ja.md)).
+
 ## Commands
 
 | Command | Role | What it reviews |
@@ -76,44 +97,37 @@ explicit user confirmation.
 See [SECURITY.md](./SECURITY.md) for the full threat model and the
 vulnerability reporting process.
 
-## Usage
+## Usage at a glance
 
-### Review mode
+> Full guide: **[USAGE.md](./USAGE.md)** ([日本語版](./USAGE.ja.md))
 
-Run any command to get a full review:
+### Review mode — scoped or full analysis
 
 ```
 /claude-c-suite:ceo                   # Auto-diagnose and executive summary
 /claude-c-suite:cto                   # Full CTO review of current repo
-/claude-c-suite:cto owner/repo        # Analyze a specific repo
-/claude-c-suite:cdo components        # Focus on a specific area
+/claude-c-suite:cto debt              # Focus on tech debt only
 /claude-c-suite:cso auth              # Focus on authentication
 /claude-c-suite:clo licenses          # Focus on dependency licenses
 /claude-c-suite:coo cicd              # Focus on CI/CD pipeline
 /claude-c-suite:cmo seo               # Focus on SEO health
-/claude-c-suite:caio models            # Focus on model lifecycle
-/claude-c-suite:cfo costs              # Focus on cloud costs
-/claude-c-suite:cio data               # Focus on data governance
+/claude-c-suite:caio models           # Focus on model lifecycle
+/claude-c-suite:cfo costs             # Focus on cloud costs
+/claude-c-suite:cio data              # Focus on data governance
 ```
 
-### Question mode
+### Question mode — ask anything
 
-Ask any officer a direct question — they'll answer from their perspective, grounded in your actual codebase:
+Each role answers natural-language questions from its perspective, grounded in your actual codebase:
 
 ```
 /claude-c-suite:ceo Are we ready to launch?
 /claude-c-suite:cto Should we migrate to a monorepo?
 /claude-c-suite:pm Should we delay the launch to fix these bugs?
-/claude-c-suite:cdo Should we use a modal or a drawer here?
 /claude-c-suite:cso Is our JWT implementation secure?
-/claude-c-suite:qa-lead Do we need E2E tests for this flow?
-/claude-c-suite:dx-lead How should we structure error responses?
 /claude-c-suite:clo Can we use this GPL library in our SaaS product?
-/claude-c-suite:coo Are we ready for a zero-downtime deployment?
-/claude-c-suite:cmo Will this page rank well for our target keywords?
-/claude-c-suite:caio Are we handling prompt injection risks?
 /claude-c-suite:cfo Are we over-provisioned on our database tier?
-/claude-c-suite:cio Is our data model normalized correctly?
+/claude-c-suite:caio Are we handling prompt injection risks?
 ```
 
 ## Cross-Reference Map
@@ -221,6 +235,21 @@ graph TD
 - **Cross-referencing** — Run multiple commands in one session; they reference each other's findings
 - **GitHub-native** — Uses `gh` CLI to gather issues, milestones, and commit history
 - **Universal** — No project-specific assumptions; works with any codebase
+
+## Documentation
+
+| Document | Purpose |
+|----------|---------|
+| [USAGE.md](./USAGE.md) / [USAGE.ja.md](./USAGE.ja.md) | Full usage guide — quick start, decision tree, patterns, troubleshooting |
+| [SECURITY.md](./SECURITY.md) | Threat model, mitigations, GitHub token scopes, vulnerability reporting |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | Style guide, feature freeze policy, PR workflow |
+| [CHANGELOG.md](./CHANGELOG.md) | Release history (v1.0 → present) |
+| [AUDIT.md](./AUDIT.md) | Conformance audit matrix and verifier (`python3 scripts/audit.py`) |
+
+## Related plugins
+
+- **[claude-phd-panel](https://github.com/JFK/claude-phd-panel-plugin)** — Academic review (Distributed Systems, Statistics, Database Theory, etc.). Findings are auto-incorporated by C-Suite commands when run in the same session.
+- **[expert-craft](https://github.com/JFK/expert-craft-plugin)** — Create your own custom domain experts that integrate with C-Suite cross-references.
 
 ## License
 
