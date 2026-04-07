@@ -11,6 +11,10 @@ Thanks for your interest in improving this plugin.
 - ✅ **Maintainer utility commands** (e.g., `/audit`) may be added if
   they support governance, conformance, or release workflows. These
   are exempt from role-specific conventions.
+- ✅ **Router commands** (e.g., `/ask`) that dispatch to existing roles
+  without introducing a new perspective may be added. They satisfy
+  nearly all role conventions but have no Review Mode by design — see
+  `AUDIT.md` for the router conformance subset.
 - ✅ Bug fixes, documentation improvements, governance/compliance work,
   and internal refactors are welcome
 - ✅ Cross-reference graph adjustments to existing roles are welcome

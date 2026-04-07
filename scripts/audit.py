@@ -72,10 +72,28 @@ UTILITY_COMMANDS = {
     "audit.md",
 }
 
-EXPECTED_COMMANDS = ROLE_COMMANDS | UTILITY_COMMANDS
+# Router commands are user-facing dispatchers that delegate to role
+# commands rather than performing analysis themselves (e.g., /ask).
+# They must satisfy nearly all role conventions — they are user-facing
+# and produce analysis output via the role they adopt — but they have
+# no Review Mode by design (reviews live on the individual role
+# commands and on /ceo).
+ROUTER_COMMANDS = {
+    "ask.md",
+}
+
+EXPECTED_COMMANDS = ROLE_COMMANDS | UTILITY_COMMANDS | ROUTER_COMMANDS
 
 # Subset of COMMAND_CHECKS that applies to utility commands.
 UTILITY_CHECK_KEYS = {"frontmatter", "trust_boundary", "ai_disclaimer"}
+
+# Subset of COMMAND_CHECKS that applies to router commands.
+# Same as role commands minus review_mode.
+ROUTER_CHECK_KEYS = {
+    "frontmatter", "trust_boundary", "mode_detection", "question_mode",
+    "scope_args", "cross_reference", "phd_panel_ref", "ai_disclaimer",
+    "analysis_only",
+}
 
 
 def audit_commands() -> tuple[dict[str, dict[str, bool | None]], list[str]]:
@@ -96,6 +114,8 @@ def audit_commands() -> tuple[dict[str, dict[str, bool | None]], list[str]]:
             content = f.read()
         if fname in UTILITY_COMMANDS:
             applicable: set[str] = set(UTILITY_CHECK_KEYS)
+        elif fname in ROUTER_COMMANDS:
+            applicable = set(ROUTER_CHECK_KEYS)
         else:
             applicable = {key for key, _, _ in COMMAND_CHECKS}
         per_file: dict[str, bool | None] = {}
@@ -181,9 +201,11 @@ def main() -> int:
 
     role_count = sum(1 for f in results if f in ROLE_COMMANDS)
     util_count = sum(1 for f in results if f in UTILITY_COMMANDS)
+    router_count = sum(1 for f in results if f in ROUTER_COMMANDS)
     print(f"✅ All {total_checks} conformance checks passed "
           f"({role_count} role commands × {len(COMMAND_CHECKS)} checks "
           f"+ {util_count} utility commands × {len(UTILITY_CHECK_KEYS)} checks "
+          f"+ {router_count} router commands × {len(ROUTER_CHECK_KEYS)} checks "
           f"+ metadata).")
     return 0
 
