@@ -1,6 +1,12 @@
 # Claude C-Suite Plugin
 
+![version](https://img.shields.io/badge/version-1.5.0-blue)
+![license](https://img.shields.io/badge/license-MIT-green)
+![commands](https://img.shields.io/badge/commands-14-purple)
+
 あらゆるコードベースに経営チームの視点を。13の専門レビューコマンドと、最適なCxOへ自動振り分けするルーター（`/ask`）が、異なるリーダーシップの観点からプロジェクトを分析します。
+
+> 📝 **紹介記事**: [Claude Codeに「経営会議」を持ち込む — claude-c-suite-plugin を作った話 (Qiita)](https://qiita.com/kiyotaman/items/29718a0d5f6363ccb8a2)
 
 ## 60秒クイックスタート
 
