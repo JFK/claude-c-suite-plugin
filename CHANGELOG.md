@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.6.0] — 2026-04-12 — "i18n Pass"
+
 ### Added
 - **User-level configuration file** at `~/.claude/claude-c-suite.json`.
   Users can set `language` to an ISO 639-1 code to lock the default
