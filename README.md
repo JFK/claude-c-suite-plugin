@@ -1,6 +1,6 @@
 # Claude C-Suite Plugin
 
-![version](https://img.shields.io/badge/version-1.5.0-blue)
+![version](https://img.shields.io/badge/version-1.6.0-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 ![commands](https://img.shields.io/badge/commands-14-purple)
 
