@@ -87,6 +87,49 @@ Each command's accepted scopes are listed in its frontmatter (run
 
 ---
 
+## Configuration
+
+### Setting the default output language
+
+By default, commands respond in the language you write your question
+in. To lock the output to a specific language regardless of question
+language, create a config file:
+
+```
+/claude-c-suite:config init
+```
+
+This writes `~/.claude/claude-c-suite.json` with an annotated
+template. Edit it to set your preferred language:
+
+```json
+{
+  "version": "1.5.0",
+  "language": "ja"
+}
+```
+
+From now on, every C-Suite command will respond in Japanese — even if
+you type your question in English. To switch back to auto-detect,
+remove the `language` key or delete the file.
+
+### Viewing effective configuration
+
+```
+/claude-c-suite:config             # show full config
+/claude-c-suite:config language    # show just the language setting
+```
+
+### What gets translated
+
+- **Translated**: prose, recommendations, action items, analysis.
+- **Not translated**: code blocks, file paths, CLI commands, issue
+  titles, technical identifiers, and structural section headings
+  (e.g., `## Technical Health Summary`). These stay in English so
+  output remains machine-parseable.
+
+---
+
 ## Common patterns
 
 ### Multi-role consultation

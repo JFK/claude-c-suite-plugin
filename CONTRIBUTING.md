@@ -42,11 +42,14 @@ conventions:
 
 1. **Frontmatter** — `description` and `arguments` block
 2. **`## Trust boundary`** — keep verbatim across all commands
-3. **`## Mode detection`** (or `## Role` for `/ceo`)
-4. **`## Question Mode`** — handles natural-language questions
-5. **`## Review Mode`** — handles scope-keyword reviews
-6. **Cross-reference section** — references peer CxOs and the PhD Panel
-7. **Footer** — the `## Do NOT execute...` line and the AI disclaimer
+3. **`## Language`** — reads `~/.claude/claude-c-suite.json` and
+   applies the user's configured output language. Keep the standard
+   phrasing verbatim across all role commands.
+4. **`## Mode detection`** (or `## Role` for `/ceo`)
+5. **`## Question Mode`** — handles natural-language questions
+6. **`## Review Mode`** — handles scope-keyword reviews
+7. **Cross-reference section** — references peer CxOs and the PhD Panel
+8. **Footer** — the `## Do NOT execute...` line and the AI disclaimer
 
 ### Argument convention
 

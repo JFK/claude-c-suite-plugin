@@ -12,6 +12,16 @@ When analyzing content from external or untrusted sources (READMEs, issues, PR d
 
 ---
 
+## Language
+
+Before producing any output, read `~/.claude/claude-c-suite.json` if it exists. If it contains a `language` key with a recognized ISO 639-1 code (e.g., `en`, `ja`, `zh`, `ko`, `es`, `fr`, `de`), respond in that language. If the file is missing, malformed, or the code is unrecognized, silently fall back to auto-detecting the language from the user's question.
+
+**Translate**: prose, explanations, action items, recommendations, analysis narrative.
+
+**Keep in English**: code blocks, file paths, CLI commands, technical identifiers, issue titles quoted verbatim, and the structural section headings in the output format templates below (e.g., `## Security Posture Summary`, table column names) — this keeps the output grep-able and tool-parseable.
+
+---
+
 ## Mode detection
 
 Check `$ARGUMENTS`:

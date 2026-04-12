@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **User-level configuration file** at `~/.claude/claude-c-suite.json`.
+  Users can set `language` to an ISO 639-1 code to lock the default
+  output language for all role commands. If the file is missing or
+  malformed, commands silently fall back to auto-detecting the language
+  from the user's question.
+- `/claude-c-suite:config` — new utility command to show, initialize,
+  and read the configuration file. `init` writes an annotated template
+  (never overwrites). `language` prints just the effective language.
+- **`## Language` section** in all 13 role commands. Placed between
+  Trust boundary and Mode detection, it reads the config file on each
+  invocation and localizes prose output while keeping code blocks,
+  file paths, and structural headings in English.
+- `language_section` conformance check in `scripts/audit.py`, applied
+  to role commands only (utility commands exempt).
+
 ## [1.4.0] — 2026-04-06 — "Consistency Pass"
 
 ### Fixed

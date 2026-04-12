@@ -40,6 +40,8 @@ consultation, plugin combinations, troubleshooting), see
 | `/cio` | Chief Information Officer | Data governance, system integration, information architecture, schema management |
 | `/qa-lead` | QA Lead | Test coverage, quality metrics, testing strategy gaps |
 | `/dx-lead` | DX Lead | Developer experience, API ergonomics, SDK usability, onboarding |
+| `/config` | Utility | Manage `~/.claude/claude-c-suite.json` — show, init, read settings |
+| `/audit` | Utility | Conformance audit and release gate |
 
 ## Role Details
 
@@ -228,6 +230,35 @@ graph TD
     CTO <--> CFO
     QA <--> CSO
 ```
+
+## Configuration
+
+Set a default output language for all C-Suite commands via
+`~/.claude/claude-c-suite.json`:
+
+```bash
+/claude-c-suite:config init   # creates the template
+```
+
+Then edit to your preference:
+
+```json
+{
+  "version": "1.5.0",
+  "language": "ja"
+}
+```
+
+| Key | Values | Default |
+|-----|--------|---------|
+| `language` | ISO 639-1 code (`en`, `ja`, `zh`, `ko`, `es`, `fr`, `de`, …) | Auto-detect from question |
+| `version` | Plugin version stamp (informational) | Set by `init` |
+
+- If the file is missing or malformed, commands silently fall back to
+  auto-detecting the language from the user's question.
+- Prose, explanations, and recommendations are translated; code blocks,
+  file paths, CLI commands, and structural headings stay in English.
+- Run `/claude-c-suite:config` to see the current effective config.
 
 ## Design Principles
 
