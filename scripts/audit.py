@@ -31,6 +31,9 @@ COMMAND_CHECKS = [
     ("trust_boundary",
      "## Trust boundary section",
      lambda c: "## Trust boundary" in c),
+    ("language_section",
+     "## Language section",
+     lambda c: "## Language" in c),
     ("mode_detection",
      "## Mode detection section",
      lambda c: "## Mode detection" in c),
@@ -64,12 +67,14 @@ ROLE_COMMANDS = {
     "cio.md", "qa-lead.md", "dx-lead.md",
 }
 
-# Utility commands are maintainer tools (e.g., the audit gate itself).
-# They share the safety conventions (Trust boundary, AI disclaimer) but
-# are exempt from role-specific conventions (Question/Review modes,
-# Top 3 cross-references, PhD Panel cross-references, scope-keyword args).
+# Utility commands are maintainer / configuration tools (e.g., the audit
+# gate itself, or the user config helper). They share the safety
+# conventions (Trust boundary, AI disclaimer) but are exempt from
+# role-specific conventions (Question/Review modes, Top 3 cross-references,
+# PhD Panel cross-references, scope-keyword args, Language section).
 UTILITY_COMMANDS = {
     "audit.md",
+    "config.md",
 }
 
 # Router commands are user-facing dispatchers that delegate to role
@@ -90,9 +95,9 @@ UTILITY_CHECK_KEYS = {"frontmatter", "trust_boundary", "ai_disclaimer"}
 # Subset of COMMAND_CHECKS that applies to router commands.
 # Same as role commands minus review_mode.
 ROUTER_CHECK_KEYS = {
-    "frontmatter", "trust_boundary", "mode_detection", "question_mode",
-    "scope_args", "cross_reference", "phd_panel_ref", "ai_disclaimer",
-    "analysis_only",
+    "frontmatter", "trust_boundary", "language_section", "mode_detection",
+    "question_mode", "scope_args", "cross_reference", "phd_panel_ref",
+    "ai_disclaimer", "analysis_only",
 }
 
 
