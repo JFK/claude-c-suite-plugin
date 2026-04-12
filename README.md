@@ -1,6 +1,12 @@
 # Claude C-Suite Plugin
 
-Executive team perspectives for any codebase. Thirteen specialized review commands that analyze your project from different leadership viewpoints.
+![version](https://img.shields.io/badge/version-1.5.0-blue)
+![license](https://img.shields.io/badge/license-MIT-green)
+![commands](https://img.shields.io/badge/commands-14-purple)
+
+Executive team perspectives for any codebase. Thirteen specialized review commands plus a single-CxO router (`/ask`) that analyze your project from different leadership viewpoints.
+
+> 📝 **Read the story** (JP): [Claude Codeに「経営会議」を持ち込む — claude-c-suite-plugin を作った話](https://qiita.com/kiyotaman/items/29718a0d5f6363ccb8a2)
 
 ## 60-second quick start
 
@@ -28,6 +34,7 @@ consultation, plugin combinations, troubleshooting), see
 | Command | Role | What it reviews |
 |---------|------|-----------------|
 | `/ceo` | CEO (Meta) | Triages needs to the right CxOs, synthesizes cross-cutting insights |
+| `/ask` | C-Suite Router | Auto-routes your question to the single best CxO and answers from that one lens |
 | `/cto` | Chief Technology Officer | Tech debt, architecture, refactoring priorities, dependency risks |
 | `/pm` | Product Manager | Milestone triage, issue prioritization, release planning |
 | `/cdo` | Chief Design Officer | UI/UX consistency, design system health, component reuse |
@@ -45,9 +52,10 @@ consultation, plugin combinations, troubleshooting), see
 
 ## Role Details
 
-### CEO (Meta-Layer)
+### CEO (Meta-Layer) and Router
 
 - **CEO** — Sits above the cross-reference graph, not inside it. Triages the user's need to the 3 most relevant CxO perspectives, analyzes through those lenses, and synthesizes a unified executive decision. Does not perform specialized analysis — knows **which experts to consult** and how to **resolve conflicts between them**. *"The right 3 perspectives beat all 11 spread thin"*
+- **`/ask` (Router)** — The lightweight cousin of `/ceo`. Auto-routes a single question to the **one** best-fit CxO/Lead and answers from that single lens. Use it when you have a question but don't want to think about which expert to call. Cheaper than `/ceo` (one lens vs three) and easier than calling a role directly (no org-chart memorization). Declines routing and redirects to `/ceo` when the question genuinely needs synthesis. *"One sharp lens beats three blurry ones"*
 
 ### Strategy & Management
 
@@ -123,6 +131,8 @@ vulnerability reporting process.
 Each role answers natural-language questions from its perspective, grounded in your actual codebase:
 
 ```
+/claude-c-suite:ask Is this SQL schema normalized correctly?
+/claude-c-suite:ask How risky is the new dependency we just added?
 /claude-c-suite:ceo Are we ready to launch?
 /claude-c-suite:cto Should we migrate to a monorepo?
 /claude-c-suite:pm Should we delay the launch to fix these bugs?

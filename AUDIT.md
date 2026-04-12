@@ -19,7 +19,7 @@ opening a pull request and before tagging a release.
 
 ## Command categories
 
-The plugin distinguishes two kinds of commands:
+The plugin distinguishes three kinds of commands:
 
 - **Role commands** (13): the executive perspectives (`/ceo`, `/cto`,
   `/pm`, `/cdo`, `/cso`, `/clo`, `/coo`, `/cmo`, `/caio`, `/cfo`,
@@ -32,6 +32,12 @@ The plugin distinguishes two kinds of commands:
   Panel cross-references, scope-keyword args, Language section) but
   must still pass the safety conventions (Trust boundary, AI
   disclaimer, frontmatter).
+- **Router commands** (1): user-facing dispatchers that delegate to
+  role commands rather than performing analysis themselves (`/ask`).
+  They satisfy nearly all role conventions — including the `## Language`
+  section — because they are user-facing and produce analysis output
+  via the role they adopt, but they have **no Review Mode** by design
+  — reviews live on the individual role commands and on `/ceo`.
 
 The audit script reports `—` for inapplicable cells in the matrix.
 
@@ -41,19 +47,19 @@ Each command file under `commands/` is verified against the following
 checks. The "Roles" column marks which checks apply to role commands,
 and "Utility" marks which apply to utility commands:
 
-| Check | What it verifies | Roles | Utility |
-|-------|------------------|:-:|:-:|
-| **Frontmatter** | YAML frontmatter declares `description` and `arguments` | ✅ | ✅ |
-| **Trust boundary** | `## Trust boundary` section is present (prompt-injection guardrail) | ✅ | ✅ |
-| **AI disclaimer** | The footer phrase `AI-generated advice` is present | ✅ | ✅ |
-| **Language** | `## Language` section is present (honors `~/.claude/claude-c-suite.json`) | ✅ | — |
-| **Mode detection** | `## Mode detection` section is present | ✅ | — |
-| **Question Mode** | `## Question Mode` handler is present | ✅ | — |
-| **Review Mode** | `## Review Mode` handler is present | ✅ | — |
-| **Scope-keyword args** | The string `owner/repo` does **not** appear (legacy convention) | ✅ | — |
-| **Cross-references** | The phrase `cross-reference` appears (Top 3 peer references) | ✅ | — |
-| **PhD Panel reference** | The plugin slug `claude-phd-panel` appears | ✅ | — |
-| **Analysis-only guarantee** | `Do NOT execute` or `Do NOT move` is present | ✅ | — |
+| Check | What it verifies | Roles | Utility | Router |
+|-------|------------------|:-:|:-:|:-:|
+| **Frontmatter** | YAML frontmatter declares `description` and `arguments` | ✅ | ✅ | ✅ |
+| **Trust boundary** | `## Trust boundary` section is present (prompt-injection guardrail) | ✅ | ✅ | ✅ |
+| **AI disclaimer** | The footer phrase `AI-generated advice` is present | ✅ | ✅ | ✅ |
+| **Language** | `## Language` section is present (honors `~/.claude/claude-c-suite.json`) | ✅ | — | ✅ |
+| **Mode detection** | `## Mode detection` section is present | ✅ | — | ✅ |
+| **Question Mode** | `## Question Mode` handler is present | ✅ | — | ✅ |
+| **Review Mode** | `## Review Mode` handler is present | ✅ | — | — |
+| **Scope-keyword args** | The string `owner/repo` does **not** appear (legacy convention) | ✅ | — | ✅ |
+| **Cross-references** | The phrase `cross-reference` appears (Top 3 peer references) | ✅ | — | ✅ |
+| **PhD Panel reference** | The plugin slug `claude-phd-panel` appears | ✅ | — | ✅ |
+| **Analysis-only guarantee** | `Do NOT execute` or `Do NOT move` is present | ✅ | — | ✅ |
 
 ## Repository-level checks
 
@@ -74,6 +80,7 @@ whenever the audit script reports a new state.
 
 | Command | Frontmatter | Trust boundary | Language | Mode detection | Question Mode | Review Mode | Scope args | Cross-ref | PhD Panel | Disclaimer | Analysis-only |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| `/ask` | ✅ | ✅ | ✅ | ✅ | ✅ | — | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `/audit` | ✅ | ✅ | — | — | — | — | — | — | — | ✅ | — |
 | `/caio` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `/cdo` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

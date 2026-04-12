@@ -28,6 +28,7 @@ the safe, always-correct entry point.
 | Goal | Command |
 |------|---------|
 | Get an executive summary of the project | `/claude-c-suite:ceo` |
+| Ask one quick question, let the plugin pick the right expert | `/claude-c-suite:ask` |
 | Find tech debt and refactor priorities | `/claude-c-suite:cto` |
 | Audit security posture / OWASP coverage | `/claude-c-suite:cso` |
 | Check dependency licenses, GDPR readiness | `/claude-c-suite:clo` |
@@ -42,6 +43,26 @@ the safe, always-correct entry point.
 | Review API ergonomics and developer experience | `/claude-c-suite:dx-lead` |
 
 If you can't decide, run `/ceo` and let it pick.
+
+---
+
+## Three entry points: `/ask`, `/<role>`, `/ceo`
+
+The plugin offers three levels of "how much do I want to think about this?":
+
+| Entry point | Lenses | Cost | When to use |
+|---|---|---|---|
+| **`/claude-c-suite:ask <question>`** | 1 (auto-picked) | cheapest | "Just answer me — I don't want to pick a role" |
+| **`/claude-c-suite:<role> <question>`** | 1 (you pick) | cheap | "I already know this is a CTO question" |
+| **`/claude-c-suite:ceo <question>`** | 3 + synthesis | most | "I need trade-off resolution between perspectives" |
+
+`/ask` is the newest and the simplest. It scores all 11 CxO/Lead roles against your question, picks the single sharpest one, and answers from that lens. If your question genuinely needs multiple perspectives (e.g., "should we ship now or harden?"), `/ask` will **decline routing** and tell you to run `/ceo` instead. This honest decline is a feature — a wrong single-lens answer is more harmful than a redirect.
+
+```
+/claude-c-suite:ask Is this SQL schema normalized correctly?
+/claude-c-suite:ask How risky is the new dependency we added?
+/claude-c-suite:ask Is the README structure good for SEO?
+```
 
 ---
 

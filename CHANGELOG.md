@@ -15,12 +15,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `/claude-c-suite:config` — new utility command to show, initialize,
   and read the configuration file. `init` writes an annotated template
   (never overwrites). `language` prints just the effective language.
-- **`## Language` section** in all 13 role commands. Placed between
-  Trust boundary and Mode detection, it reads the config file on each
-  invocation and localizes prose output while keeping code blocks,
-  file paths, and structural headings in English.
+- **`## Language` section** in all 13 role commands and the `/ask`
+  router. Placed between Trust boundary and Mode detection, it reads
+  the config file on each invocation and localizes prose output while
+  keeping code blocks, file paths, and structural headings in English.
 - `language_section` conformance check in `scripts/audit.py`, applied
-  to role commands only (utility commands exempt).
+  to role and router commands (utility commands exempt).
+
+## [1.5.0] — 2026-04-07 — "Router Pass"
+
+### Added
+- `/claude-c-suite:ask` — new **router command**. Auto-routes a single
+  question to the one best-fit CxO/Lead and answers from that single
+  lens. Sits between calling a role directly (cheap, but you have to
+  pick) and `/ceo` (synthesis of three lenses). Scores all 11 routable
+  roles on domain fit, evidence locatability, and single-lens
+  sufficiency, then picks the highest. **Declines routing** and
+  redirects to `/ceo` when the question genuinely needs multi-lens
+  synthesis — an honest decline is preferred over a wrong single-lens
+  answer.
+- New conformance category in `scripts/audit.py`: **router commands**.
+  Routers satisfy nearly all role conventions (Trust boundary, mode
+  detection, Question Mode, cross-references, PhD Panel reference,
+  AI disclaimer, analysis-only guarantee) but have no Review Mode by
+  design — reviews live on the role commands and on `/ceo`.
+- `AUDIT.md` and `CONTRIBUTING.md` document the new router category
+  and matrix row.
 
 ## [1.4.0] — 2026-04-06 — "Consistency Pass"
 
