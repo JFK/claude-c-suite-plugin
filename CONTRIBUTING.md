@@ -43,8 +43,12 @@ conventions:
 1. **Frontmatter** — `description` and `arguments` block
 2. **`## Trust boundary`** — keep verbatim across all commands
 3. **`## Language`** — reads `~/.claude/claude-c-suite.json` and
-   applies the user's configured output language. Keep the standard
-   phrasing verbatim across all role commands.
+   applies the user's configured output language. The core instruction
+   text (config path, ISO 639-1 list, fallback policy, Translate /
+   Keep in English rules) must be verbatim across all role commands.
+   The `e.g.` heading example in the "Keep in English" line is
+   intentionally role-specific — use the actual structural heading
+   from your command's output format template.
 4. **`## Mode detection`** (or `## Role` for `/ceo`)
 5. **`## Question Mode`** — handles natural-language questions
 6. **`## Review Mode`** — handles scope-keyword reviews
