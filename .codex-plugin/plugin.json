@@ -1,0 +1,51 @@
+{
+  "name": "claude-c-suite",
+  "version": "1.6.0",
+  "description": "Executive team perspectives for any codebase: CEO, CTO, PM, CDO, CSO, CLO, COO, CMO, CAIO, CFO, CIO, QA Lead, and DX Lead reviews.",
+  "author": {
+    "name": "Fumikazu Kiyota",
+    "email": "fumikazu.kiyota@gmail.com",
+    "url": "https://github.com/JFK"
+  },
+  "homepage": "https://github.com/JFK/claude-c-suite-plugin#readme",
+  "repository": "https://github.com/JFK/claude-c-suite-plugin",
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "architecture",
+    "security",
+    "design-system",
+    "testing",
+    "developer-experience",
+    "project-management",
+    "license-compliance",
+    "operations",
+    "seo",
+    "privacy",
+    "observability",
+    "analytics",
+    "ai-governance",
+    "cost-optimization",
+    "data-governance",
+    "information-architecture"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Claude C-Suite",
+    "shortDescription": "Executive review skills for any codebase.",
+    "longDescription": "Run focused codebase analysis from CEO, CTO, product, design, security, legal, operations, marketing, AI, finance, data, QA, and developer-experience perspectives inside Codex.",
+    "developerName": "Fumikazu Kiyota",
+    "category": "Productivity",
+    "capabilities": [
+      "Analyze",
+      "Review"
+    ],
+    "websiteURL": "https://github.com/JFK/claude-c-suite-plugin",
+    "defaultPrompt": [
+      "Run a CEO review of this repository.",
+      "Ask the C-Suite which risk matters most.",
+      "Review this codebase from a CTO lens."
+    ],
+    "brandColor": "#2563EB"
+  }
+}
