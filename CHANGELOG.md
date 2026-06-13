@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Codex plugin support via `.codex-plugin/plugin.json` and thin skill
+  adapters under `skills/`, one per existing C-Suite command.
+- Shared Codex adapter guidance in `.codex-plugin/codex-adapter.md`,
+  keeping the existing `commands/` prompts as the source of truth.
+- Codex compatibility checks in `scripts/audit.py`, plus documentation
+  for Codex skill names in `README` and `USAGE`.
+
 ## [1.6.0] — 2026-04-12 — "i18n Pass"
 
 ### Added

@@ -21,6 +21,12 @@ your day-to-day work.
 That's it. **When in doubt, start with `/ceo`** — it's designed to be
 the safe, always-correct entry point.
 
+In Codex, use the equivalent skill:
+
+```
+$claude-c-suite-ceo
+```
+
 ---
 
 ## "I want to..." → which command?
@@ -63,6 +69,44 @@ The plugin offers three levels of "how much do I want to think about this?":
 /claude-c-suite:ask How risky is the new dependency we added?
 /claude-c-suite:ask Is the README structure good for SEO?
 ```
+
+---
+
+## Using in Codex
+
+Codex support lives in `.codex-plugin/plugin.json` and `skills/`. After
+installing this repository as a Codex plugin, start a new thread and
+invoke skills by name or natural language.
+
+| Claude Code command | Codex skill |
+|------|------|
+| `/claude-c-suite:ceo` | `$claude-c-suite-ceo` |
+| `/claude-c-suite:ask` | `$claude-c-suite-ask` |
+| `/claude-c-suite:cto` | `$claude-c-suite-cto` |
+| `/claude-c-suite:pm` | `$claude-c-suite-pm` |
+| `/claude-c-suite:cdo` | `$claude-c-suite-cdo` |
+| `/claude-c-suite:cso` | `$claude-c-suite-cso` |
+| `/claude-c-suite:clo` | `$claude-c-suite-clo` |
+| `/claude-c-suite:coo` | `$claude-c-suite-coo` |
+| `/claude-c-suite:cmo` | `$claude-c-suite-cmo` |
+| `/claude-c-suite:caio` | `$claude-c-suite-caio` |
+| `/claude-c-suite:cfo` | `$claude-c-suite-cfo` |
+| `/claude-c-suite:cio` | `$claude-c-suite-cio` |
+| `/claude-c-suite:qa-lead` | `$claude-c-suite-qa-lead` |
+| `/claude-c-suite:dx-lead` | `$claude-c-suite-dx-lead` |
+| `/claude-c-suite:config` | `$claude-c-suite-config` |
+| `/claude-c-suite:audit` | `$claude-c-suite-audit` |
+
+Examples:
+
+```
+$claude-c-suite-cto debt
+$claude-c-suite-cso Is our JWT implementation secure?
+Use Claude C-Suite PM to review the current milestone.
+```
+
+The Codex adapters keep the original command prompts in `commands/` as
+the source of truth, so Claude Code and Codex stay aligned.
 
 ---
 
@@ -133,6 +177,9 @@ template. Edit it to set your preferred language:
 From now on, every C-Suite command will respond in Japanese — even if
 you type your question in English. To switch back to auto-detect,
 remove the `language` key or delete the file.
+
+In Codex, the skill adapters check `~/.codex/claude-c-suite.json`
+first, then fall back to `~/.claude/claude-c-suite.json`.
 
 ### Viewing effective configuration
 

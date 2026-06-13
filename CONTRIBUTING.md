@@ -33,9 +33,12 @@ dependencies to install. To contribute:
 
 1. Fork the repository
 2. Make your changes to files under `commands/`, `README.md`, or the
-   `.claude-plugin/` metadata
+   `.claude-plugin/` / `.codex-plugin/` metadata. If you add a command,
+   add the matching Codex adapter under `skills/<command>/SKILL.md`.
 3. Test the affected commands locally with your installed Claude Code
-4. Open a pull request against `main`
+   and, when relevant, test the matching skill in Codex.
+4. Run `python3 scripts/audit.py`
+5. Open a pull request against `main`
 
 ## Style guide for command files
 
@@ -69,6 +72,19 @@ All commands accept a single optional `input` argument that is either:
 
 Commands must **not** accept `owner/repo` style arguments — they always
 operate on the current working directory's repository.
+
+### Codex skill adapters
+
+Each command must have a matching Codex skill adapter:
+
+```
+skills/<command>/SKILL.md
+```
+
+The adapter should stay thin. It must reference
+`../../.codex-plugin/codex-adapter.md` and the authoritative command prompt at
+`../../commands/<command>.md`, rather than duplicating the full prompt.
+This keeps Claude Code commands and Codex skills aligned.
 
 ### Cross-reference graph
 

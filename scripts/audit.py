@@ -19,6 +19,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CMD_DIR = os.path.join(ROOT, "commands")
+SKILLS_DIR = os.path.join(ROOT, "skills")
 
 # Each check is (key, label, predicate). The predicate receives the file
 # content as a string and returns True if the check passes.
@@ -88,6 +89,7 @@ ROUTER_COMMANDS = {
 }
 
 EXPECTED_COMMANDS = ROLE_COMMANDS | UTILITY_COMMANDS | ROUTER_COMMANDS
+EXPECTED_SKILLS = {name.replace(".md", "") for name in EXPECTED_COMMANDS}
 
 # Subset of COMMAND_CHECKS that applies to utility commands.
 UTILITY_CHECK_KEYS = {"frontmatter", "trust_boundary", "ai_disclaimer"}
@@ -115,7 +117,7 @@ def audit_commands() -> tuple[dict[str, dict[str, bool | None]], list[str]]:
         errors.append(f"Unexpected command files: {sorted(extra)}")
 
     for fname in sorted(found):
-        with open(os.path.join(CMD_DIR, fname)) as f:
+        with open(os.path.join(CMD_DIR, fname), encoding="utf-8") as f:
             content = f.read()
         if fname in UTILITY_COMMANDS:
             applicable: set[str] = set(UTILITY_CHECK_KEYS)
@@ -131,31 +133,109 @@ def audit_commands() -> tuple[dict[str, dict[str, bool | None]], list[str]]:
     return results, errors
 
 
-def audit_metadata() -> list[str]:
-    """Run repository-level metadata checks. Returns list of failure messages."""
+def audit_metadata() -> tuple[list[str], int]:
+    """Run repository-level metadata checks. Returns (errors, check_count)."""
     errors: list[str] = []
+    check_count = 0
     plugin_path = os.path.join(ROOT, ".claude-plugin", "plugin.json")
     market_path = os.path.join(ROOT, ".claude-plugin", "marketplace.json")
+    codex_plugin_path = os.path.join(ROOT, ".codex-plugin", "plugin.json")
 
-    with open(plugin_path) as f:
+    def check(condition: bool, message: str) -> None:
+        nonlocal check_count
+        check_count += 1
+        if not condition:
+            errors.append(message)
+
+    with open(plugin_path, encoding="utf-8") as f:
         plugin = json.load(f)
-    with open(market_path) as f:
+    with open(market_path, encoding="utf-8") as f:
         market = json.load(f)
 
     plugin_version = plugin.get("version")
     market_version = market.get("plugins", [{}])[0].get("version")
-    if plugin_version != market_version:
-        errors.append(
-            f"plugin.json version ({plugin_version}) != "
-            f"marketplace.json version ({market_version})"
-        )
+    check(
+        plugin_version == market_version,
+        f"plugin.json version ({plugin_version}) != "
+        f"marketplace.json version ({market_version})",
+    )
 
     for required in ("SECURITY.md", "CONTRIBUTING.md", "CHANGELOG.md",
                      "README.md", "README.ja.md", "AUDIT.md"):
-        if not os.path.exists(os.path.join(ROOT, required)):
-            errors.append(f"Missing required document: {required}")
+        check(
+            os.path.exists(os.path.join(ROOT, required)),
+            f"Missing required document: {required}",
+        )
 
-    return errors
+    check(
+        os.path.exists(codex_plugin_path),
+        "Missing Codex plugin manifest: .codex-plugin/plugin.json",
+    )
+    if os.path.exists(codex_plugin_path):
+        with open(codex_plugin_path, encoding="utf-8") as f:
+            codex_plugin = json.load(f)
+        check(
+            codex_plugin.get("name") == plugin.get("name"),
+            ".codex-plugin/plugin.json name must match .claude-plugin/plugin.json",
+        )
+        check(
+            codex_plugin.get("version") == plugin_version,
+            ".codex-plugin/plugin.json version must match .claude-plugin/plugin.json",
+        )
+        check(
+            codex_plugin.get("skills") == "./skills/",
+            ".codex-plugin/plugin.json must point skills to ./skills/",
+        )
+        interface = codex_plugin.get("interface", {})
+        for field in ("displayName", "shortDescription", "longDescription",
+                      "developerName", "category"):
+            check(
+                bool(interface.get(field)),
+                f".codex-plugin/plugin.json interface.{field} is required",
+            )
+
+    shared_adapter = os.path.join(ROOT, ".codex-plugin", "codex-adapter.md")
+    check(
+        os.path.exists(shared_adapter),
+        "Missing shared Codex adapter: .codex-plugin/codex-adapter.md",
+    )
+
+    found_skills: set[str] = set()
+    if os.path.isdir(SKILLS_DIR):
+        found_skills = {
+            name for name in os.listdir(SKILLS_DIR)
+            if os.path.isdir(os.path.join(SKILLS_DIR, name))
+        }
+    check(
+        not (EXPECTED_SKILLS - found_skills),
+        f"Missing Codex skill adapters: {sorted(EXPECTED_SKILLS - found_skills)}",
+    )
+    check(
+        not (found_skills - EXPECTED_SKILLS),
+        f"Unexpected Codex skill adapters: {sorted(found_skills - EXPECTED_SKILLS)}",
+    )
+
+    for skill in sorted(EXPECTED_SKILLS & found_skills):
+        skill_path = os.path.join(SKILLS_DIR, skill, "SKILL.md")
+        check(os.path.exists(skill_path), f"Missing Codex skill file: skills/{skill}/SKILL.md")
+        if not os.path.exists(skill_path):
+            continue
+        with open(skill_path, encoding="utf-8") as f:
+            content = f.read()
+        check(
+            f"name: claude-c-suite-{skill}" in content,
+            f"skills/{skill}/SKILL.md has wrong skill name",
+        )
+        check(
+            "../../.codex-plugin/codex-adapter.md" in content,
+            f"skills/{skill}/SKILL.md must reference the shared Codex adapter",
+        )
+        check(
+            f"../../commands/{skill}.md" in content,
+            f"skills/{skill}/SKILL.md must reference commands/{skill}.md",
+        )
+
+    return errors, check_count
 
 
 def render_matrix(results: dict[str, dict[str, bool | None]]) -> str:
@@ -167,11 +247,11 @@ def render_matrix(results: dict[str, dict[str, bool | None]]) -> str:
         for key, _, _ in COMMAND_CHECKS:
             value = results[fname][key]
             if value is None:
-                cells.append("—")
+                cells.append("N/A")
             elif value:
-                cells.append("✅")
+                cells.append("PASS")
             else:
-                cells.append("❌")
+                cells.append("FAIL")
         lines.append("| " + " | ".join(cells) + " |")
     return "\n".join(lines)
 
@@ -179,7 +259,7 @@ def render_matrix(results: dict[str, dict[str, bool | None]]) -> str:
 def main() -> int:
     show_matrix = "--matrix" in sys.argv
     results, structural_errors = audit_commands()
-    metadata_errors = audit_metadata()
+    metadata_errors, metadata_check_count = audit_metadata()
 
     failures: list[str] = list(structural_errors)
     total_checks = 0
@@ -191,7 +271,7 @@ def main() -> int:
             total_checks += 1
             if not value:
                 failures.append(f"{fname}: {label}")
-    total_checks += 1 + 6  # version sync + 6 required documents
+    total_checks += metadata_check_count
     failures.extend(metadata_errors)
 
     if show_matrix:
@@ -201,16 +281,16 @@ def main() -> int:
     if failures:
         print("AUDIT FAILED:")
         for f in failures:
-            print(f"  ❌ {f}")
+            print(f"  FAIL {f}")
         return 1
 
     role_count = sum(1 for f in results if f in ROLE_COMMANDS)
     util_count = sum(1 for f in results if f in UTILITY_COMMANDS)
     router_count = sum(1 for f in results if f in ROUTER_COMMANDS)
-    print(f"✅ All {total_checks} conformance checks passed "
-          f"({role_count} role commands × {len(COMMAND_CHECKS)} checks "
-          f"+ {util_count} utility commands × {len(UTILITY_CHECK_KEYS)} checks "
-          f"+ {router_count} router commands × {len(ROUTER_CHECK_KEYS)} checks "
+    print(f"All {total_checks} conformance checks passed "
+          f"({role_count} role commands x {len(COMMAND_CHECKS)} checks "
+          f"+ {util_count} utility commands x {len(UTILITY_CHECK_KEYS)} checks "
+          f"+ {router_count} router commands x {len(ROUTER_CHECK_KEYS)} checks "
           f"+ metadata).")
     return 0
 

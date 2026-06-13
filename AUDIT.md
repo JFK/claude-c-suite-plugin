@@ -66,6 +66,10 @@ and "Utility" marks which apply to utility commands:
 | Check | What it verifies |
 |-------|------------------|
 | **Version sync** | `plugin.json` `version` equals `marketplace.json` `plugins[0].version` |
+| **Codex manifest sync** | `.codex-plugin/plugin.json` exists and its `name` / `version` match `.claude-plugin/plugin.json` |
+| **Codex skills path** | `.codex-plugin/plugin.json` points `skills` to `./skills/` and includes required interface metadata |
+| **Codex skill adapters** | Every expected command has a matching `skills/<command>/SKILL.md` that references the shared adapter and command source |
+| **Shared Codex adapter** | `.codex-plugin/codex-adapter.md` exists |
 | **SECURITY.md exists** | Threat model and reporting policy |
 | **CONTRIBUTING.md exists** | Style guide and feature freeze policy |
 | **CHANGELOG.md exists** | Release history |
@@ -107,6 +111,7 @@ checklist for any new role:
 2. Add the role to the `EXPECTED_COMMANDS` set in `scripts/audit.py`
 3. Add the new row to the matrix in this file
 4. Add the role to the commands tables in `README.md` and `README.ja.md`
-5. Update the Top 3 cross-reference graph in `commands/ceo.md`
-6. Add a CHANGELOG entry under `[Unreleased]`
-7. Run `python3 scripts/audit.py` and confirm exit code 0
+5. Add the Codex skill adapter at `skills/<role>/SKILL.md`
+6. Update the Top 3 cross-reference graph in `commands/ceo.md`
+7. Add a CHANGELOG entry under `[Unreleased]`
+8. Run `python3 scripts/audit.py` and confirm exit code 0

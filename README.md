@@ -25,6 +25,25 @@ The CEO command auto-diagnoses your project, picks the 3 most relevant
 executive perspectives, and gives you a prioritized action list. **When
 in doubt, start with `/ceo`** — it's the safe, always-correct entry point.
 
+### Codex quick start
+
+This repository also ships a Codex plugin manifest and skill adapters:
+`.codex-plugin/plugin.json` and `skills/`.
+
+Once installed in Codex, start a new thread in any git repository and use
+the equivalent skill:
+
+```
+$claude-c-suite-ceo
+```
+
+You can also ask naturally:
+
+```
+Use Claude C-Suite CEO to review this repository.
+$claude-c-suite-ask How risky is the new dependency we added?
+```
+
 For the full guide (decision tree, common patterns, multi-role
 consultation, plugin combinations, troubleshooting), see
 **[USAGE.md](./USAGE.md)** ([日本語版](./USAGE.ja.md)).
@@ -86,9 +105,27 @@ consultation, plugin combinations, troubleshooting), see
 
 ## Installation
 
+### Claude Code
+
 ```bash
 /plugin marketplace add JFK/claude-c-suite-plugin
 /plugin install claude-c-suite
+```
+
+### Codex
+
+Codex support is provided by `.codex-plugin/plugin.json` and the
+adapters in `skills/`. Install this repository as a Codex plugin from
+your local or marketplace source, then start a new Codex thread so the
+skills are loaded.
+
+The primary skills are:
+
+```
+$claude-c-suite-ceo
+$claude-c-suite-ask
+$claude-c-suite-cto
+$claude-c-suite-cso
 ```
 
 ### Required GitHub token scopes
@@ -266,6 +303,8 @@ Then edit to your preference:
 
 - If the file is missing or malformed, commands silently fall back to
   auto-detecting the language from the user's question.
+- In Codex, skill adapters check `~/.codex/claude-c-suite.json` first,
+  then fall back to the Claude Code path above.
 - Prose, explanations, and recommendations are translated; code blocks,
   file paths, CLI commands, and structural headings stay in English.
 - Run `/claude-c-suite:config` to see the current effective config.
